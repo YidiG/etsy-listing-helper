@@ -78,3 +78,11 @@ Tags are max 20 characters including spaces. Fits: "freshwater pearl" (16), "pea
 
 - Etsy's Handmade Policy: if production partners are used, disclose them; the shop's About text mentions pearls imported from China, Japan and Australia and pieces made in Canada — keep listing claims consistent with that.
 - Make sure French translations are enabled in Shop Manager if you want the French blocks to be live.
+
+## 8. Fixed listing defaults (apply to every listing; never ask for these)
+
+- Item weight: 0.5 kg. Packed size: 25 cm × 20 cm × 4 cm (length × width × height).
+- Delivery option: "default delivery setup" (the shop's existing calculated-shipping profile).
+- Returns and exchanges: Returns only, 7 days.
+- Gift box: every product comes in a gift box. In the PACKAGE line write "1 {product} in a gift box" (French: "dans un écrin cadeau").
+- Clasp: never mention or describe the clasp shape (no "heart clasp" etc.) in the title, tags, description or alt text. Say "silver clasp" only if the user says the clasp is silver.
