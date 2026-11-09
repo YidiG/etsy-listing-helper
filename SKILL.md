@@ -3,12 +3,13 @@ name: perlith-listing-helper
 description: >-
   Generate complete, copy-paste-ready Etsy listing content for Perlith Jewelry Co (pearl
   jewelry): English title, 13 tags, materials, category, attributes, alt text, plus the
-  description in English and French with the shop's fixed "Please Note", and the price,
-  quantity and SKU. Use whenever the user provides pearl jewelry product info (pearl type,
-  size in mm, metal, length, clasp, price, quantity, SKU, etc.) and/or product photos and
-  wants Etsy listing info, listing copy, SEO tags, or anything related to publishing a
-  product on Etsy. Also trigger when the user only sends product photos in a session where
-  product info was given earlier — reuse that info. One image = one listing output.
+  description in English and French with the shop's fixed "Please Note", the price,
+  quantity and SKU, and the shop's fixed shipping defaults. Use whenever the user provides
+  pearl jewelry product info (pearl type, size in mm, metal, length, price, quantity, SKU,
+  etc.) and/or product photos and wants Etsy listing info, listing copy, SEO tags, or
+  anything related to publishing a product on Etsy. Also trigger when the user only sends
+  product photos in a session where product info was given earlier — reuse that info.
+  One image = one listing output.
 ---
 
 # Perlith Listing Helper
@@ -24,7 +25,7 @@ Forked from the general-purpose etsy-listing-helper (MIT) and specialised for th
 - Brand voice: polished, boutique, aspirational but accurate. Words like "timeless", "natural beauty", "everyday luxury" fit. Avoid hype and anything not supported by the spec.
 - The user may add other jewelry types later (earrings, bracelets, rings). Same rules apply; pick the matching category.
 
-Read [references/pearl-jewelry.md](references/pearl-jewelry.md) for pearl-specific vocabulary, keyword angles, and accuracy rules.
+Read [references/pearl-jewelry.md](references/pearl-jewelry.md) for pearl-specific vocabulary, keyword angles, accuracy rules, and the fixed shop defaults (section 8).
 
 ## Language rules
 
@@ -36,7 +37,7 @@ Never mix languages inside a copy-paste block. Annotations (rationale, notes) us
 
 ## Inputs you may receive
 
-1. **Product base info**: pearl type, pearl size (mm), shape, color, metal/chain material, length(s), clasp, strand count, extras, package contents, care notes.
+1. **Product base info**: pearl type, pearl size (mm), shape, color, metal/chain material, length(s), clasp metal, strand count, extras, care notes.
 2. **Price, quantity and SKU** for the listing.
 3. **One or more product photos**.
 
@@ -44,14 +45,15 @@ Rules:
 - **N images → N complete listings**, numbered Listing 1, Listing 2…
 - **Images only** → reuse the most recent product base info (and price, quantity, SKU only if the user said they apply) from this conversation; if none, ask for it.
 - **Spec text only** → generate one listing; mark design details (style, shape, color) that need a photo as placeholders.
-- Look carefully at each image: strand count, pearl size/shape/color impression, pendant or station detail, chain type, clasp if visible. These drive the keywords.
+- Look carefully at each image: strand count, pearl size/shape/color impression, pendant or station detail, chain type, clasp metal if visible. These drive the keywords. Never describe the clasp's shape.
 - Do not guess what you can't verify (pearl type, metal purity, length). If a key fact is missing, put `[CONFIRM: …]` in the output and list what to check.
-- **Price, quantity and SKU are never invented.** Copy them exactly as the user gave them (keep the currency symbol/format). If any is missing, show `[CONFIRM: price]`, `[CONFIRM: quantity]` or `[CONFIRM: SKU]` and list it under "To confirm".
-- **Variations**: most products have none, so do not include a Variations section or suggest variations. Only if the user says a product has variations, add a "Variations" section after "Price, Quantity & SKU" with the options they gave.
+- **Price, quantity and SKU are never invented.** Copy them exactly as the user gave them (keep the currency symbol/format). If any is missing, show `[CONFIRM: price]`, `[CONFIRM: quantity]` or `[CONFIRM: SKU]` and list it under "To confirm". If the user says to skip the SKU, write "Skipped".
+- **Fixed shop defaults** (weight, packed size, delivery option, returns, gift box, no clasp shape) always apply and are never asked for — see section 8 of `references/pearl-jewelry.md`.
+- **Variations**: most products have none, so do not include a Variations section or suggest variations. Only if the user says a product has variations, add a "Variations" section after "Price, Quantity, SKU & Shipping" with the options they gave.
 
 ## Reference files — read before writing
 
-- [references/pearl-jewelry.md](references/pearl-jewelry.md) — **always read**. Pearl terms EN/FR, keyword angles, accuracy rules, the fixed Please Note text.
+- [references/pearl-jewelry.md](references/pearl-jewelry.md) — **always read**. Pearl terms EN/FR, keyword angles, accuracy rules, the fixed Please Note text, the fixed listing defaults.
 - [references/listing-fields.md](references/listing-fields.md) — **always read**. Consolidated per-field Etsy rules (ranking, title, tags, description, materials, category, attributes, variations).
 - [references/etsy-categories.md](references/etsy-categories.md) — official category tree. Do NOT read whole; grep for the product type (e.g. "Necklaces", "Earrings") and choose the **deepest matching subcategory**. Use exact official names.
 - `references/sources/` — original Etsy articles; consult only if the rulebook leaves a question open.
@@ -61,8 +63,8 @@ Validate every title ≤ 140 characters and every tag ≤ 20 characters before o
 ## SEO principles (from Etsy Seller Handbook)
 
 - Think like a buyer: keywords = **pearl type + size/color + product type + recipient/occasion + style**.
-- Title: clear and scannable, ~15 words or fewer. Name the item and its key traits first (pearl type, size, metal, product type), no repeated words, no subjective fluff, no price/shipping info, never start with the shop name. Occasion words (bridal, wedding) only if they define the item.
-- Tags: **13 tags in total** (not per language), all in English; multi-word natural phrases; mix high-traffic and long-tail; cover several brainstorming dimensions; no plural duplicates, no misspellings, don't repeat the category or attribute words.
+- Title: clear and scannable, ~15 words or fewer. Name the item and its key traits first (pearl type, size, metal, product type), no repeated words, no subjective fluff, no price/shipping info, never start with the shop name. Occasion words (bridal, wedding) only if they define the item. Never include clasp shape words.
+- Tags: **13 tags in total** (not per language), all in English; multi-word natural phrases; mix high-traffic and long-tail; cover several brainstorming dimensions; no plural duplicates, no misspellings, don't repeat the category or attribute words; no clasp-shape tags.
 - Description: essential info (pearl size, length, metal) at the top, top keywords in the first sentences (Google snippet), don't copy the title, never open with "Welcome to my shop".
 - Category and attributes act like tags: deepest official category; fill every attribute that truly applies.
 - First photo: clean background, no text overlays, 2000 px+ recommended.
@@ -85,10 +87,10 @@ Use this exact template for every listing. Each copy-paste block contains only o
 ### 3. Description — English
 {• Opening hook with main keywords (first ~160 chars feed the Google snippet)}
 {• ✨ THE DESIGN — what it looks like, strands/stations/pendant, color}
-{• 📏 DETAILS — pearl type, pearl size, metal/chain, length(s), clasp}
+{• 📏 DETAILS — pearl type, pearl size, metal/chain, length(s), clasp metal if known}
 {• 🎁 PERFECT FOR — occasions & recipients}
 {• 🧼 CARE — only if the spec provides care info}
-{• 📦 PACKAGE — what's included}
+{• 📦 PACKAGE — 1 {product} in a gift box (always)}
 {• PLEASE NOTE — the fixed text from references/pearl-jewelry.md, verbatim}
 
 ### 3b. Description — French
@@ -104,10 +106,14 @@ Use this exact template for every listing. Each copy-paste block contains only o
 ### 6. Photo Alt Text (≤250 chars)
 {English alt text}
 
-### 7. Price, Quantity & SKU
+### 7. Price, Quantity, SKU & Shipping
 - Price: {as given by the user}
 - Quantity: {as given by the user}
-- SKU: {as given by the user}
+- SKU: {as given by the user, or "Skipped"}
+- Item weight: 0.5 kg
+- Packed size: 25 × 20 × 4 cm (L × W × H)
+- Delivery option: default delivery setup
+- Returns and exchanges: Returns only, 7 days
 
 ### 8. Rationale
 {2–5 bullets in the conversation language: title order, tag balance, category/attribute choice}
@@ -124,7 +130,7 @@ Multiple listings: repeat the template per image, separated by `---`. Keep headi
 
 Generation reads exactly three files: `pearl-jewelry.md`, `listing-fields.md`, plus a grep of `etsy-categories.md`.
 
-1. **Shop-specific facts** (voice, product range, fixed texts, vocabulary) → `references/pearl-jewelry.md`.
+1. **Shop-specific facts** (voice, product range, fixed texts, vocabulary, fixed defaults) → `references/pearl-jewelry.md`.
 2. **General Etsy rules** → merge into `references/listing-fields.md`, deduplicated; replace contradicted rules; originals go in `references/sources/` with URL and date.
 3. **Don't add more always-read files.** Add a section to an existing one.
 4. `etsy-categories.md` stays a pure lookup table.
