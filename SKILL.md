@@ -49,6 +49,8 @@ Rules:
 - Do not guess what you can't verify (pearl type, metal purity, length). If a key fact is missing, put `[CONFIRM: …]` in the output and list what to check.
 - **Price, quantity and SKU are never invented.** Copy them exactly as the user gave them (keep the currency symbol/format). If any is missing, show `[CONFIRM: price]`, `[CONFIRM: quantity]` or `[CONFIRM: SKU]` and list it under "To confirm". If the user says to skip the SKU, write "Skipped".
 - **Fixed shop defaults** (weight, packed size, delivery option, returns, gift box, no clasp shape) always apply and are never asked for — see section 8 of `references/pearl-jewelry.md`.
+- **Uploading to Etsy (when asked to list it)**: always upload every file the user attached for the listing, photos AND videos, in the order sent, before saving the draft. Use Claude in Chrome: find the file input (never click the upload button) and call file_upload with the attachment paths. The built-in browser cannot upload. Etsy allows videos of max 10 seconds: trim longer ones to the first 10 s (ffmpeg -t 10). Try the original video first; if the upload tool refuses it, do not compress (Etsy accepts the original), send the file with SendUserFile and ask the user to add it under "Add videos". Save as draft only; never publish unless the user clearly says so.
+- **Title check before entering it**: ~15 words or fewer, no repeated words, no subjective words (perfect, beautiful), ≤140 characters.
 - **Variations**: most products have none, so do not include a Variations section or suggest variations. Only if the user says a product has variations, add a "Variations" section after "Price, Quantity, SKU & Shipping" with the options they gave.
 
 ## Reference files — read before writing
